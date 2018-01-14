@@ -1,21 +1,3 @@
-<!--
-<template>
-  <div>
-    <div>
-      <p>Your tasks here.</p>
-
-      <ul v-for="book in books">
-        <li>
-          {{ book.name }}
-          {{ book.author }}
-        </li>
-      </ul>
-
-    </div>
-  </div>
-</template>
--->
-
 <template>
   <el-table
     :data="books"
