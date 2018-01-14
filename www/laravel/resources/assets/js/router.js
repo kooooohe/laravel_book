@@ -6,6 +6,7 @@ Vue.use(VueRouter)
 export default new VueRouter({
   mode: 'history',
   routes: [
+    { path: '/home', component: require('./components/Books.vue') },
     { path: '/about', component: require('./components/Books.vue') },
   ],
   scrollBehavior (to, from, savedPosition) {

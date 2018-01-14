@@ -11,6 +11,16 @@
 |
 */
 
+Route::get('/', 'TestController@index');
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
 //middleware
 Route::get('/', function () {
         return view('app');
@@ -18,8 +28,3 @@ Route::get('/', function () {
 Route::get('/about', function () {
         return view('app');
 });
-//Route::get('/', 'TestController@index');
-
-//Route::get('/', function () {
-//    return view('welcome');
-//});
