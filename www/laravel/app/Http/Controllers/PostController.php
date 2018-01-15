@@ -25,7 +25,8 @@ class PostController extends Controller {
      */
     public function addbook(Request $request)
     {
-        Book::create(['name'    => $request->name,
+        Book::create([
+                       'name'   => $request->name,
                        'author' => $request->author
                     ]);
         return ["isSccess" => true];

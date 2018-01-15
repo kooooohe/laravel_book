@@ -49656,29 +49656,119 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     this.fetchBooks();
+    //this.loadAll();
   },
   data: function data() {
     return {
       books: [],
+      books_backup: [],
       author: '',
-      created_at: ''
+      created_at: '',
+
+      sujests: [],
+      state4: '',
+      timeout: null
     };
   },
 
   methods: {
+    testSubmit: function testSubmit() {
+      console.log("aaa");
+    },
     fetchBooks: function fetchBooks() {
       var _this = this;
 
       // TODO: not to send request when the user is not authenticated
       __WEBPACK_IMPORTED_MODULE_0__services_http__["a" /* default */].get('books', function (res) {
         _this.books = res.data;
+        _this.books_backup = res.data;
+
+        var names = [];
+        for (var i in res.data) {
+          names.push({ "value": res.data[i].name, "id": res.data[i].id });
+        }
+        _this.sujests = names;
+        console.log(names);
       });
+    },
+
+    //addTask () {
+    //  if (this.name === '') {
+    //    this.showAlert = true
+    //    this.alertMessage = 'Task name should not be blank.'
+    //    return false
+    //  }
+    //  http.post('tasks', {name: this.name}, res => {
+    //    this.tasks[res.data.id] = res.data
+    //    this.name = ''
+    //    this.showAlert = false
+    //    this.alertMessage = ''
+    //  })
+    //},
+    //completeTask (task) {
+    //  http.put('tasks/' + task.id, {is_done: !task.is_done}, res => {
+    //    this.tasks[task.id] = res.data
+    //    this.$forceUpdate()
+    //  })
+    //},
+    //removeTask (task) {
+    //  http.delete('tasks/' + task.id, {}, () => {
+    //    delete this.tasks[task.id]
+    //    this.$forceUpdate()
+    //  })
+    //},
+    //loadAll() {
+    //    this.sujests =
+    //  [
+    //    { "value": "vue"        },
+    //    { "value": "element"    },
+    //    { "value": "cooking"    },
+    //    { "value": "mint-ui"    },
+    //    { "value": "vuex"       },
+    //    { "value": "vue-router" },
+    //    { "value": "babel"      }
+    //   ];
+    //},
+    querySearchAsync: function querySearchAsync(queryString, cb) {
+      var sujests = this.sujests;
+      var results = queryString ? sujests.filter(this.createFilter(queryString)) : sujests;
+
+      clearTimeout(this.timeout);
+      this.timeout = setTimeout(function () {
+        cb(results);
+      }, 3000 * Math.random());
+    },
+    createFilter: function createFilter(queryString) {
+      return function (link) {
+        return link.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0;
+      };
+    },
+    handleSelect: function handleSelect(item) {
+      console.log(item.id);
+      this.books = this.books_backup.filter(function (element, index, array) {
+        console.log(element.name);
+        console.log(item.value);
+        return element.name == item.value;
+      });
+
+      //this.books = [this.books[item.id - 1]];
     }
   }
 });
@@ -49692,57 +49782,91 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "el-table",
-    {
-      staticStyle: { width: "100%" },
-      attrs: { data: _vm.books, height: "500" }
-    },
+    "div",
     [
-      _c("el-table-column", {
-        attrs: { prop: "date", label: "Date", width: "180" }
-      }),
-      _vm._v(" "),
-      _c("el-table-column", {
-        attrs: { prop: "name", label: "Name", width: "180" }
-      }),
-      _vm._v(" "),
-      _c("el-table-column", {
-        attrs: { label: "Operations" },
-        scopedSlots: _vm._u([
-          {
-            key: "default",
-            fn: function(scope) {
-              return [
-                _c(
-                  "el-button",
-                  {
-                    attrs: { size: "mini" },
-                    on: {
-                      click: function($event) {
-                        _vm.handleEdit(scope.$index, scope.row)
-                      }
-                    }
-                  },
-                  [_vm._v("Edit")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "el-button",
-                  {
-                    attrs: { size: "mini", type: "danger" },
-                    on: {
-                      click: function($event) {
-                        _vm.handleDelete(scope.$index, scope.row)
-                      }
-                    }
-                  },
-                  [_vm._v("Delete")]
-                )
-              ]
+      _c("el-autocomplete", {
+        attrs: {
+          "fetch-suggestions": _vm.querySearchAsync,
+          placeholder: "Please input"
+        },
+        on: {
+          keyup: function($event) {
+            if (
+              !("button" in $event) &&
+              _vm._k($event.keyCode, "enter", 13, $event.key)
+            ) {
+              return null
             }
-          }
-        ])
-      })
+            _vm.testSubmit($event)
+          },
+          select: _vm.handleSelect
+        },
+        model: {
+          value: _vm.state4,
+          callback: function($$v) {
+            _vm.state4 = $$v
+          },
+          expression: "state4"
+        }
+      }),
+      _vm._v(" "),
+      _c("hr"),
+      _vm._v(" "),
+      _c(
+        "el-table",
+        {
+          staticStyle: { width: "100%" },
+          attrs: { data: _vm.books, height: "500" }
+        },
+        [
+          _c("el-table-column", {
+            attrs: { prop: "date", label: "Date", width: "180" }
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { prop: "name", label: "Name", width: "180" }
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { label: "Operations" },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(scope) {
+                  return [
+                    _c(
+                      "el-button",
+                      {
+                        attrs: { size: "mini" },
+                        on: {
+                          click: function($event) {
+                            _vm.handleEdit(scope.$index, scope.row)
+                          }
+                        }
+                      },
+                      [_vm._v("Edit")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "el-button",
+                      {
+                        attrs: { size: "mini", type: "danger" },
+                        on: {
+                          click: function($event) {
+                            _vm.handleDelete(scope.$index, scope.row)
+                          }
+                        }
+                      },
+                      [_vm._v("Delete")]
+                    )
+                  ]
+                }
+              }
+            ])
+          })
+        ],
+        1
+      )
     ],
     1
   )
@@ -49846,9 +49970,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    this.fetchBooks();
-  },
+  //  mounted() {
+  //    this.fetchBooks()
+  //  },
   data: function data() {
     return {
       addBookForm: {

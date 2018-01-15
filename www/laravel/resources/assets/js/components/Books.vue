@@ -1,4 +1,14 @@
 <template>
+<div>
+<el-autocomplete
+  v-model="state4"
+  @keyup.enter="testSubmit"
+  :fetch-suggestions="querySearchAsync"
+  placeholder="Please input"
+  @select="handleSelect"
+></el-autocomplete>
+<hr>
+
   <el-table
     :data="books"
     height="500"
@@ -26,6 +36,7 @@
       </template>
     </el-table-column>
   </el-table>
+  </div>
 </template>
 
 <script>
@@ -33,20 +44,38 @@
 
   export default {
     mounted() {
-      this.fetchBooks()
+      this.fetchBooks();
+      //this.loadAll();
     },
     data() {
       return {
         books: [],
+        books_backup: [],
         author: '',
         created_at: '',
+
+        sujests: [],
+        state4: '',
+        timeout:  null
       }
     },
     methods: {
+    testSubmit () {
+     console.log("aaa");
+    },
+
       fetchBooks () {
         // TODO: not to send request when the user is not authenticated
         http.get('books', res => {
-          this.books = res.data
+          this.books = res.data;
+          this.books_backup = res.data;
+
+          let names = [];
+          for (let i in res.data){
+            names.push({"value": res.data[i].name, "id": res.data[i].id});
+          }
+          this.sujests = names;
+        console.log(names);
         })
       },
       //addTask () {
@@ -74,6 +103,42 @@
       //    this.$forceUpdate()
       //  })
       //},
+      //loadAll() {
+      //    this.sujests =
+      //  [
+      //    { "value": "vue"        },
+      //    { "value": "element"    },
+      //    { "value": "cooking"    },
+      //    { "value": "mint-ui"    },
+      //    { "value": "vuex"       },
+      //    { "value": "vue-router" },
+      //    { "value": "babel"      }
+      //   ];
+      //},
+      querySearchAsync(queryString, cb) {
+        var sujests = this.sujests;
+        var results = queryString ? sujests.filter(this.createFilter(queryString)) : sujests;
+
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => {
+          cb(results);
+        }, 3000 * Math.random());
+      },
+      createFilter(queryString) {
+        return (link) => {
+          return (link.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+        };
+      },
+      handleSelect(item) {
+        console.log(item.id);
+        this.books = this.books_backup.filter(function(element, index, array) {
+            console.log(element.name);
+            console.log(item.value);
+               return (element.name == item.value);
+        });
+
+        //this.books = [this.books[item.id - 1]];
+      }
     }
   }
 </script>
