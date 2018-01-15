@@ -1,7 +1,7 @@
 <template>
   <el-table
     :data="books"
-    height="250"
+    height="500"
     style="width: 100%">
     <el-table-column
       prop="date"

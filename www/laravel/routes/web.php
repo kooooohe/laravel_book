@@ -17,4 +17,6 @@
 
 Auth::routes();
 Route::get('/', 'TopController@index')->name('top');
+Route::get('/addbook', 'TopController@index')->name('addbook');
+Route::post('/addbook', 'PostController@addbook');
 Route::get('/home', 'HomeController@index')->name('home');

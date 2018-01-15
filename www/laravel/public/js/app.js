@@ -46931,7 +46931,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vue_
 
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
   mode: 'history',
-  routes: [{ path: '/', component: __webpack_require__(105) }, { path: '/home', component: __webpack_require__(105) }],
+  routes: [{ path: '/', name: 'books', component: __webpack_require__(105) }, { path: '/addbook', name: 'addBook', component: __webpack_require__(203) }, { path: '/home', component: __webpack_require__(105) }],
   scrollBehavior: function scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
       return savedPosition;
@@ -49695,7 +49695,7 @@ var render = function() {
     "el-table",
     {
       staticStyle: { width: "100%" },
-      attrs: { data: _vm.books, height: "250" }
+      attrs: { data: _vm.books, height: "500" }
     },
     [
       _c("el-table-column", {
@@ -90392,11 +90392,76 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { attrs: { id: "app" } }, [
-    _c("div", [_c("router-view")], 1),
-    _vm._v(" "),
-    _c("hr")
-  ])
+  return _c(
+    "div",
+    { attrs: { id: "app" } },
+    [
+      _c(
+        "el-container",
+        { staticStyle: { height: "1000px", border: "1px solid #eee" } },
+        [
+          _c(
+            "el-aside",
+            {
+              staticStyle: { "background-color": "rgb(238, 241, 246)" },
+              attrs: { width: "200px" }
+            },
+            [
+              _c(
+                "el-menu",
+                { attrs: { "default-openeds": ["1", "1"] } },
+                [
+                  _c(
+                    "el-submenu",
+                    { attrs: { index: "1" } },
+                    [
+                      _c("template", { slot: "title" }, [
+                        _c("i", { staticClass: "el-icon-star-off" }),
+                        _vm._v("Menu")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "el-menu-item",
+                        { attrs: { index: "1-1" } },
+                        [
+                          _c(
+                            "router-link",
+                            { attrs: { to: { name: "books" } } },
+                            [_vm._v("Books List")]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "el-menu-item",
+                        { attrs: { index: "1-2" } },
+                        [
+                          _c(
+                            "router-link",
+                            { attrs: { to: { name: "addBook" } } },
+                            [_vm._v("Add Book")]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    2
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("el-main", [_c("div", [_c("router-view")], 1)])
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -90405,6 +90470,204 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-6971d05f", module.exports)
+  }
+}
+
+/***/ }),
+/* 203 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(53)
+/* script */
+var __vue_script__ = __webpack_require__(204)
+/* template */
+var __vue_template__ = __webpack_require__(205)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/addBook.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1b46be63", Component.options)
+  } else {
+    hotAPI.reload("data-v-1b46be63", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 204 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_http__ = __webpack_require__(54);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mounted: function mounted() {
+    this.fetchBooks();
+  },
+  data: function data() {
+    return {
+      addBookForm: {
+        name: '',
+        author: '',
+        test: []
+      }
+    };
+  },
+
+  methods: {
+    onSubmit: function onSubmit() {
+      var _this = this;
+
+      __WEBPACK_IMPORTED_MODULE_0__services_http__["a" /* default */].post('addbook', { name: this.addBookForm.name, author: this.addBookForm.author }, function (res) {
+        //this.tasks[res.data.id] = res.data
+        //this.name = ''
+        _this.showAlert = false;
+        _this.alertMessage = 'Book is added';
+        _this.alertMessage = 'Book is added';
+        _this.test = res.data;
+      });
+      console.log(this.test);
+    },
+    fetchBooks: function fetchBooks() {
+      var _this2 = this;
+
+      __WEBPACK_IMPORTED_MODULE_0__services_http__["a" /* default */].get('books', function (res) {
+        _this2.books = res.data;
+      });
+    }
+  }
+});
+
+/***/ }),
+/* 205 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "el-form",
+    { attrs: { inline: false, model: _vm.addBookForm } },
+    [
+      _c(
+        "el-form-item",
+        {
+          attrs: {
+            label: "Name",
+            rules: [{ required: true, message: "name is required" }]
+          }
+        },
+        [
+          _c("el-input", {
+            attrs: { placeholder: "name" },
+            model: {
+              value: _vm.addBookForm.name,
+              callback: function($$v) {
+                _vm.$set(_vm.addBookForm, "name", $$v)
+              },
+              expression: "addBookForm.name"
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "el-form-item",
+        { attrs: { label: "Author" } },
+        [
+          _c("el-input", {
+            attrs: { placeholder: "author" },
+            model: {
+              value: _vm.addBookForm.author,
+              callback: function($$v) {
+                _vm.$set(_vm.addBookForm, "author", $$v)
+              },
+              expression: "addBookForm.author"
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "el-form-item",
+        [
+          _c(
+            "el-button",
+            { attrs: { type: "primary" }, on: { click: _vm.onSubmit } },
+            [_vm._v("Submit")]
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-1b46be63", module.exports)
   }
 }
 
