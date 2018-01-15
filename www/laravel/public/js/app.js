@@ -49667,12 +49667,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    this.fetchBooks();
+    this.fetchAllBooks();
     //this.loadAll();
   },
   data: function data() {
@@ -49681,30 +49683,38 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       books_backup: [],
       author: '',
       created_at: '',
+      is_loading: false,
 
       sujests: [],
-      state4: '',
+      search_word: '',
       timeout: null
     };
   },
 
   methods: {
-    testSubmit: function testSubmit() {
-      console.log("aaa");
-    },
     fetchBooks: function fetchBooks() {
       var _this = this;
 
+      console.log(this.search_word);
+      this.is_loading = true;
+      __WEBPACK_IMPORTED_MODULE_0__services_http__["a" /* default */].post('books', { name: this.search_word }, function (res) {
+        _this.books = res.data;
+        _this.is_loading = false;
+      });
+    },
+    fetchAllBooks: function fetchAllBooks() {
+      var _this2 = this;
+
       // TODO: not to send request when the user is not authenticated
       __WEBPACK_IMPORTED_MODULE_0__services_http__["a" /* default */].get('books', function (res) {
-        _this.books = res.data;
-        _this.books_backup = res.data;
+        _this2.books = res.data;
+        _this2.books_backup = res.data;
 
         var names = [];
         for (var i in res.data) {
           names.push({ "value": res.data[i].name, "id": res.data[i].id });
         }
-        _this.sujests = names;
+        _this2.sujests = names;
         console.log(names);
       });
     },
@@ -49763,12 +49773,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     handleSelect: function handleSelect(item) {
       console.log(item.id);
       this.books = this.books_backup.filter(function (element, index, array) {
-        console.log(element.name);
-        console.log(item.value);
         return element.name == item.value;
       });
-
-      //this.books = [this.books[item.id - 1]];
     }
   }
 });
@@ -49802,13 +49808,26 @@ var render = function() {
           select: _vm.handleSelect
         },
         model: {
-          value: _vm.state4,
+          value: _vm.search_word,
           callback: function($$v) {
-            _vm.state4 = $$v
+            _vm.search_word = $$v
           },
-          expression: "state4"
+          expression: "search_word"
         }
       }),
+      _vm._v(" "),
+      _c(
+        "el-button",
+        {
+          attrs: {
+            type: "primary",
+            icon: "el-icon-search",
+            loading: _vm.is_loading
+          },
+          on: { click: _vm.fetchBooks }
+        },
+        [_vm._v("Search")]
+      ),
       _vm._v(" "),
       _c("hr"),
       _vm._v(" "),
