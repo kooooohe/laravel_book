@@ -44,10 +44,14 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show(Request $request)
     {
-        $a = Book::all();
-        return $a->toArray();
+        if ($request->name) {
+            $books  = Book::where('name', 'like', '%'. $request->name. '%')->get();
+        } else {
+            $books  = Book::all();
+        }
+        return $books->toArray();
     }
 
     /**

@@ -1,12 +1,14 @@
 <template>
 <div>
 <el-autocomplete
-  v-model="state4"
+  v-model="search_word"
   @keyup.enter="testSubmit"
   :fetch-suggestions="querySearchAsync"
   placeholder="Please input"
   @select="handleSelect"
 ></el-autocomplete>
+<el-button type="primary" icon="el-icon-search" :loading="is_loading" @click="fetchBooks">Search</el-button>
+
 <hr>
 
   <el-table
@@ -44,7 +46,7 @@
 
   export default {
     mounted() {
-      this.fetchBooks();
+      this.fetchAllBooks();
       //this.loadAll();
     },
     data() {
@@ -53,18 +55,24 @@
         books_backup: [],
         author: '',
         created_at: '',
+        is_loading:false,
 
         sujests: [],
-        state4: '',
+        search_word: '',
         timeout:  null
       }
     },
     methods: {
-    testSubmit () {
-     console.log("aaa");
-    },
-
       fetchBooks () {
+        console.log(this.search_word);
+        this.is_loading = true;
+        http.post('books', {name: this.search_word}, res => {
+          this.books = res.data;
+          this.is_loading = false;
+        });
+      },
+
+      fetchAllBooks () {
         // TODO: not to send request when the user is not authenticated
         http.get('books', res => {
           this.books = res.data;
@@ -132,12 +140,9 @@
       handleSelect(item) {
         console.log(item.id);
         this.books = this.books_backup.filter(function(element, index, array) {
-            console.log(element.name);
-            console.log(item.value);
-               return (element.name == item.value);
+           return (element.name == item.value);
         });
 
-        //this.books = [this.books[item.id - 1]];
       }
     }
   }
