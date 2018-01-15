@@ -32,9 +32,9 @@
   import http from '../services/http'
 
   export default {
-    mounted() {
-      this.fetchBooks()
-    },
+  //  mounted() {
+  //    this.fetchBooks()
+  //  },
     data() {
       return {
           addBookForm: {
