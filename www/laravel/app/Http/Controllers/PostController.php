@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Book;
+use DB;
 
 
 class PostController extends Controller {
@@ -24,10 +25,9 @@ class PostController extends Controller {
      */
     public function addbook(Request $request)
     {
-        $book_model = new Book;
-        $book_model->name = $request->name;
-        $book_model->author = $request->author;
-        $book_model->save();
-        return [$request->name];
+        Book::create(['name'    => $request->name,
+                       'author' => $request->author
+                    ]);
+        return ["isSccess" => true];
     }
 }
