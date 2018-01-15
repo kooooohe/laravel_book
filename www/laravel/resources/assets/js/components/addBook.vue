@@ -1,7 +1,13 @@
 
 <template>
-<el-form :inline="false" :model="addBookForm" class=""  >
-  <el-form-item label="Name" :rules="[{ required: true ,message: 'name is required'}]">
+<el-form :inline="false" :model="addBookForm" ref="addBookForm" class=""  >
+  <el-form-item
+  prop="name"
+  label="Name"
+  :rules="[{
+      required: true ,message: 'name is required', trigger: 'blur'
+      }]"
+  >
     <el-input v-model="addBookForm.name" placeholder="name"></el-input>
   </el-form-item>
   <el-form-item label="Author">
@@ -16,7 +22,7 @@
   </el-form-item>
   -->
   <el-form-item>
-    <el-button type="primary" @click="onSubmit">Submit</el-button>
+    <el-button type="primary" @click="onSubmit('addBookForm')">Submit</el-button>
   </el-form-item>
 </el-form>
 
@@ -34,27 +40,48 @@
           addBookForm: {
             name:'',
             author:'',
-            test:[],
+            response:[],
           }
       }
     },
     methods: {
-      onSubmit() {
-        http.post('addbook', {name: this.addBookForm.name, author: this.addBookForm.author}, res => {
-          //this.tasks[res.data.id] = res.data
-          //this.name = ''
-          this.showAlert = false
-          this.alertMessage = 'Book is added'
-          this.alertMessage = 'Book is added'
-          this.test = res.data
-        })
-        console.log(this.test);
+      onSubmit(formName) {
+
+        //check validation
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+
+            http.post('addbook', {name: this.addBookForm.name, author: this.addBookForm.author}, res => {
+              this.response = res.data
+            });
+
+            this.$message({
+              showClose: true,
+              message: 'Congrats, this is a success message.',
+              type: 'success'
+            });
+
+            this.addBookForm.name = "";
+            this.addBookForm.author = "";
+
+          } else {
+            this.$message({
+              showClose: true,
+              message: 'error',
+              type: 'error'
+            });
+            console.log('error submit!!');
+            return false;
+          }
+        });
+
+        console.log(this.response);
       },
-      fetchBooks () {
-        http.get('books', res => {
-          this.books = res.data
-        })
-      },
+      //fetchBooks () {
+      //  http.get('books', res => {
+      //    this.books = res.data
+      //  })
+      //},
       //addTask () {
       //  if (this.name === '') {
       //    this.showAlert = true
