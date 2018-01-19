@@ -16,16 +16,12 @@
     height="500"
     style="width: 100%">
     <el-table-column
-      prop="date"
-      label="Date"
-      width="180">
-    </el-table-column>
-    <el-table-column
       prop="name"
       label="Name"
       width="180">
     </el-table-column>
       <el-table-column
+      width="180"
       label="Operations">
       <template slot-scope="scope">
         <el-button
@@ -37,6 +33,16 @@
           size="success"
           @click="lendBook(scope.$index, scope.row)" plain v-bind:disabled="scope.row['is_lend'] == 1">Lend</el-button>
       </template>
+    </el-table-column>
+    <el-table-column
+      prop="lend_date"
+      label="LendDate"
+      width="180">
+    </el-table-column>
+    <el-table-column
+      prop="user_name"
+      label="LendUser"
+      width="180">
     </el-table-column>
   </el-table>
 </div>
@@ -172,9 +178,6 @@
           showClose: false
         });
       },
-      //-->handleDelete(index, row) {
-      //-->  console.log(index, row);
-      //-->}
     }
   }
 </script>

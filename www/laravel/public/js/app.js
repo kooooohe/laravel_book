@@ -49670,6 +49670,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -49868,15 +49874,11 @@ var render = function() {
         },
         [
           _c("el-table-column", {
-            attrs: { prop: "date", label: "Date", width: "180" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
             attrs: { prop: "name", label: "Name", width: "180" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "Operations" },
+            attrs: { width: "180", label: "Operations" },
             scopedSlots: _vm._u([
               {
                 key: "default",
@@ -49915,6 +49917,14 @@ var render = function() {
                 }
               }
             ])
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { prop: "lend_date", label: "LendDate", width: "180" }
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { prop: "user_name", label: "LendUser", width: "180" }
           })
         ],
         1
@@ -90792,7 +90802,7 @@ var render = function() {
     [
       _c(
         "el-container",
-        { staticStyle: { height: "1000px", border: "1px solid #eee" } },
+        { staticStyle: { height: "100%", border: "1px solid #eee" } },
         [
           _c(
             "el-aside",
