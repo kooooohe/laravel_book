@@ -49786,16 +49786,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return element.name == item.value;
       });
     },
-    lendBook: function lendBook(index, row) {
+    borrowBook: function borrowBook(index, row) {
       console.log(row["id"]);
       var book_id = row['id'];
       row['is_lend'] = true;
-      __WEBPACK_IMPORTED_MODULE_0__services_http__["a" /* default */].get('book/lend/' + book_id, function (res) {
+      __WEBPACK_IMPORTED_MODULE_0__services_http__["a" /* default */].get('book/borrow/' + book_id, function (res) {
         console.log(res.data);
       });
       this.$notify.success({
         title: 'Info',
-        message: 'You lend ' + row['name'],
+        message: 'You borrow ' + row['name'],
         showClose: false
       });
     },
@@ -49908,11 +49908,11 @@ var render = function() {
                             },
                             on: {
                               click: function($event) {
-                                _vm.lendBook(scope.$index, scope.row)
+                                _vm.borrowBook(scope.$index, scope.row)
                               }
                             }
                           },
-                          [_vm._v("Lend")]
+                          [_vm._v("Borrow")]
                         )
                   ]
                 }
@@ -49925,7 +49925,7 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { prop: "user_name", label: "LendUser", width: "180" }
+            attrs: { prop: "user_name", label: "BorrowUser", width: "180" }
           })
         ],
         1
