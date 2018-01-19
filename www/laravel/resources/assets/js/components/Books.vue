@@ -29,16 +29,17 @@
       label="Operations">
       <template slot-scope="scope">
         <el-button
-          size="mini"
-          @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
+          v-if="user_id === scope.row['user_id']"
+          size="warning"
+          @click="returnBook(scope.$index, scope.row)" plain>Return</el-button>
         <el-button
-          size="mini"
-          type="danger"
-          @click="handleDelete(scope.$index, scope.row)">Delete</el-button>
+          v-else
+          size="success"
+          @click="lendBook(scope.$index, scope.row)" plain v-bind:disabled="scope.row['is_lend'] == 1">Lend</el-button>
       </template>
     </el-table-column>
   </el-table>
-  </div>
+</div>
 </template>
 
 <script>
@@ -46,8 +47,8 @@
 
   export default {
     mounted() {
+      //run when load this page
       this.fetchAllBooks();
-      //this.loadAll();
     },
     data() {
       return {
@@ -59,7 +60,8 @@
 
         sujests: [],
         search_word: '',
-        timeout:  null
+        timeout:  null,
+        user_id: parseInt(document.getElementById('user_id').value),
       }
     },
     methods: {
@@ -137,13 +139,42 @@
           return (link.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
         };
       },
+      //既存のデータから選択した情報だけ出す
       handleSelect(item) {
         console.log(item.id);
         this.books = this.books_backup.filter(function(element, index, array) {
            return (element.name == item.value);
         });
+      },
 
-      }
+      lendBook(index, row) {
+        console.log(row["id"]);
+        const book_id = row['id'];
+        row['is_lend'] = true;
+        http.get('book/lend/' + book_id, res => {
+          console.log(res.data);
+        });
+         this.$notify.success({
+          title: 'Info',
+          message: 'You lend ' + row['name'],
+          showClose: false
+        });
+      },
+      returnBook(index, row) {
+        console.log(row["id"]);
+        const book_id = row['id'];
+        http.get('book/return/' + book_id, res => {
+          console.log(res.data);
+        });
+         this.$notify.success({
+          title: 'Info',
+          message: 'You return ' + row['name'],
+          showClose: false
+        });
+      },
+      //-->handleDelete(index, row) {
+      //-->  console.log(index, row);
+      //-->}
     }
   }
 </script>

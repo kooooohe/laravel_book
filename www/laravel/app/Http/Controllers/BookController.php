@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Auth;
 use App\Models\Book;
+use App\Models\User;
+use App\Models\BookLendHistory;
+
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
@@ -35,7 +40,6 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        //
     }
 
     /**
@@ -47,13 +51,78 @@ class BookController extends Controller
     public function show(Request $request)
     {
         if ($request->name) {
-            $books  = Book::where('name', 'like', '%'. $request->name. '%')->get();
+            $books  = Book::where('name', 'like', '%'. $request->name . '%')->get();
         } else {
             $books  = Book::all();
         }
         return $books->toArray();
     }
 
+    /**
+     * update book and bookLendHistory table
+     *
+     * @param  int  $book_id
+     * @return \Illuminate\Http\Response
+     */
+    public function lend(Request $request, $book_id)
+    {
+        $this->middleware('auth');
+
+        $now         = Carbon::now();
+        $user_id     = Auth::id();
+        $target_book = Book::find($book_id);
+
+        //if it is lend already, do nothing
+        if (!$target_book->is_lend) {
+            $target_book->is_lend   = true;
+            $target_book->user_id   = $user_id;
+            $target_book->lend_date = $now;
+            $target_book->save();
+
+            //recode
+            BookLendHistory::create([
+                'user_id'   => $user_id,
+                'book_id'   => $book_id,
+                'lend_date' => $now,
+            ]);
+        }
+        return $book_id;
+    }
+
+    /**
+     * update book and bookLendHistory table
+     *
+     * @param  int  $book_id
+     * @return \Illuminate\Http\Response
+     */
+    public function returnBook($book_id)
+    {
+        $this->middleware('auth');
+
+        $now         = Carbon::now();
+        $user_id     = Auth::id();
+        $target_book = Book::find($book_id);
+
+        //if it is return already, do nothing
+        if ($target_book->is_lend) {
+            $target_book->is_lend   = false;
+            $target_book->user_id   = null;
+            $target_book->lend_date = null;
+            $target_book->save();
+
+            //recode
+            $book_history = BookLendHistory::where([
+                ['user_id', $user_id],
+                ['book_id',  $book_id],
+            ])
+                ->whereNull('return_date')
+                ->first();
+
+                $book_history->return_date = $now;
+                $book_history->save();
+        }
+        return $book_id;
+    }
     /**
      * Show the form for editing the specified resource.
      *
