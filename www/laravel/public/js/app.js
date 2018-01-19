@@ -49669,13 +49669,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
+    //run when load this page
     this.fetchAllBooks();
-    //this.loadAll();
   },
   data: function data() {
     return {
@@ -49687,7 +49688,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       sujests: [],
       search_word: '',
-      timeout: null
+      timeout: null,
+      user_id: parseInt(document.getElementById('user_id').value)
     };
   },
 
@@ -49770,10 +49772,37 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return link.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0;
       };
     },
+
+    //既存のデータから選択した情報だけ出す
     handleSelect: function handleSelect(item) {
       console.log(item.id);
       this.books = this.books_backup.filter(function (element, index, array) {
         return element.name == item.value;
+      });
+    },
+    lendBook: function lendBook(index, row) {
+      console.log(row["id"]);
+      var book_id = row['id'];
+      row['is_lend'] = true;
+      __WEBPACK_IMPORTED_MODULE_0__services_http__["a" /* default */].get('book/lend/' + book_id, function (res) {
+        console.log(res.data);
+      });
+      this.$notify.success({
+        title: 'Info',
+        message: 'You lend ' + row['name'],
+        showClose: false
+      });
+    },
+    returnBook: function returnBook(index, row) {
+      console.log(row["id"]);
+      var book_id = row['id'];
+      __WEBPACK_IMPORTED_MODULE_0__services_http__["a" /* default */].get('book/return/' + book_id, function (res) {
+        console.log(res.data);
+      });
+      this.$notify.success({
+        title: 'Info',
+        message: 'You return ' + row['name'],
+        showClose: false
       });
     }
   }
@@ -49853,31 +49882,35 @@ var render = function() {
                 key: "default",
                 fn: function(scope) {
                   return [
-                    _c(
-                      "el-button",
-                      {
-                        attrs: { size: "mini" },
-                        on: {
-                          click: function($event) {
-                            _vm.handleEdit(scope.$index, scope.row)
-                          }
-                        }
-                      },
-                      [_vm._v("Edit")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "el-button",
-                      {
-                        attrs: { size: "mini", type: "danger" },
-                        on: {
-                          click: function($event) {
-                            _vm.handleDelete(scope.$index, scope.row)
-                          }
-                        }
-                      },
-                      [_vm._v("Delete")]
-                    )
+                    _vm.user_id === scope.row["user_id"]
+                      ? _c(
+                          "el-button",
+                          {
+                            attrs: { size: "warning", plain: "" },
+                            on: {
+                              click: function($event) {
+                                _vm.returnBook(scope.$index, scope.row)
+                              }
+                            }
+                          },
+                          [_vm._v("Return")]
+                        )
+                      : _c(
+                          "el-button",
+                          {
+                            attrs: {
+                              size: "success",
+                              plain: "",
+                              disabled: scope.row["is_lend"] == 1
+                            },
+                            on: {
+                              click: function($event) {
+                                _vm.lendBook(scope.$index, scope.row)
+                              }
+                            }
+                          },
+                          [_vm._v("Lend")]
+                        )
                   ]
                 }
               }

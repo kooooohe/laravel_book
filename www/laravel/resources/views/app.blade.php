@@ -21,6 +21,7 @@
     <body>
         <div id="app">
         </div>
+        <input type="hidden" name="user_id" id="user_id" value="{{ Auth::user()->id }}">
         <script src=" {{ mix('js/app.js') }} "></script>
     </body>
 </html>
