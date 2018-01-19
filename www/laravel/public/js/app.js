@@ -49802,6 +49802,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     returnBook: function returnBook(index, row) {
       console.log(row["id"]);
       var book_id = row['id'];
+      row['user_id'] = null;
       __WEBPACK_IMPORTED_MODULE_0__services_http__["a" /* default */].get('book/return/' + book_id, function (res) {
         console.log(res.data);
       });

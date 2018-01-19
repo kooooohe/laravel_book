@@ -169,6 +169,7 @@
       returnBook(index, row) {
         console.log(row["id"]);
         const book_id = row['id'];
+        row['user_id'] = null;
         http.get('book/return/' + book_id, res => {
           console.log(res.data);
         });

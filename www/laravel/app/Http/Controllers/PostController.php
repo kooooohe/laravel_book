@@ -25,7 +25,6 @@ class PostController extends Controller {
      */
     public function addbook(Request $request)
     {
-        dd($request);
         Book::create([
                        'name'   => $request->name,
                        'author' => $request->author
