@@ -11,16 +11,17 @@
 |
 */
 
-//middleware
-Route::group(['middleware' => ['web']], function()
-{
-    Route::get('/{any}', function () {
-        return view('app');
-    })->where('any', '.*');
-    //Route::get('/', 'TestController@index');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 
+Auth::routes();
+Route::get('/', 'TopController@index')->name('top');
+Route::get('/addbook', 'TopController@index')->name('addbook');
+Route::post('/addbook', 'PostController@addbook');
+Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/api/book/lend/{book_id}', 'BookController@lend');
+Route::post('/api/book/lend/{book_id}', 'BookController@lend');
+Route::get('/api/book/return/{book_id}', 'BookController@returnBook');
+Route::post('/api/book/return/{book_id}', 'BookController@returnBook');
