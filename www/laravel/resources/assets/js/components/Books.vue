@@ -31,7 +31,7 @@
         <el-button
           v-else
           size="success"
-          @click="lendBook(scope.$index, scope.row)" plain v-bind:disabled="scope.row['is_lend'] == 1">Lend</el-button>
+          @click="borrowBook(scope.$index, scope.row)" plain v-bind:disabled="scope.row['is_lend'] == 1">Borrow</el-button>
       </template>
     </el-table-column>
     <el-table-column
@@ -41,7 +41,7 @@
     </el-table-column>
     <el-table-column
       prop="user_name"
-      label="LendUser"
+      label="BorrowUser"
       width="180">
     </el-table-column>
   </el-table>
@@ -153,16 +153,16 @@
         });
       },
 
-      lendBook(index, row) {
+      borrowBook(index, row) {
         console.log(row["id"]);
         const book_id = row['id'];
         row['is_lend'] = true;
-        http.get('book/lend/' + book_id, res => {
+        http.get('book/borrow/' + book_id, res => {
           console.log(res.data);
         });
          this.$notify.success({
           title: 'Info',
-          message: 'You lend ' + row['name'],
+          message: 'You borrow ' + row['name'],
           showClose: false
         });
       },

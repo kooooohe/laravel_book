@@ -68,7 +68,7 @@ class BookController extends Controller
      * @param  int  $book_id
      * @return \Illuminate\Http\Response
      */
-    public function lend(Request $request, $book_id)
+    public function borrow(Request $request, $book_id)
     {
         $this->middleware('auth');
 
@@ -76,7 +76,7 @@ class BookController extends Controller
         $user_id     = Auth::id();
         $target_book = Book::find($book_id);
 
-        //if it is lend already, do nothing
+        //if it is borrow already, do nothing
         if (!$target_book->is_lend) {
             $target_book->is_lend   = true;
             $target_book->user_id   = $user_id;

@@ -21,7 +21,7 @@ Route::get('/addbook', 'TopController@index')->name('addbook');
 Route::post('/addbook', 'PostController@addbook');
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/api/book/lend/{book_id}', 'BookController@lend');
-Route::post('/api/book/lend/{book_id}', 'BookController@lend');
+Route::get('/api/book/borrow/{book_id}', 'BookController@borrow');
+Route::post('/api/book/borrow/{book_id}', 'BookController@borrow');
 Route::get('/api/book/return/{book_id}', 'BookController@returnBook');
 Route::post('/api/book/return/{book_id}', 'BookController@returnBook');
