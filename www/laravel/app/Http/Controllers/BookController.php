@@ -51,9 +51,13 @@ class BookController extends Controller
     public function show(Request $request)
     {
         if ($request->name) {
-            $books  = Book::where('name', 'like', '%'. $request->name . '%')->get();
+            $books  = Book::select('books.*', 'users.name as user_name')
+                        ->leftJoin('users', 'users.id', '=', 'books.user_id')
+                        ->where('books.name', 'like', '%'. $request->name . '%')->get();
         } else {
-            $books  = Book::all();
+            $books  = Book::select('books.*', 'users.name as user_name')
+                        ->leftJoin('users', 'users.id', '=', 'books.user_id')
+                        ->get();
         }
         return $books->toArray();
     }
