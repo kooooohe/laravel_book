@@ -90826,27 +90826,25 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c(
-                        "el-menu-item",
-                        { attrs: { index: "1-1" } },
+                        "router-link",
+                        { attrs: { to: { name: "books" } } },
                         [
-                          _c(
-                            "router-link",
-                            { attrs: { to: { name: "books" } } },
-                            [_vm._v("Books List")]
-                          )
+                          _c("el-menu-item", { attrs: { index: "1-1" } }, [
+                            _vm._v(
+                              "\n                Books List\n              "
+                            )
+                          ])
                         ],
                         1
                       ),
                       _vm._v(" "),
                       _c(
-                        "el-menu-item",
-                        { attrs: { index: "1-2" } },
+                        "router-link",
+                        { attrs: { to: { name: "addBook" } } },
                         [
-                          _c(
-                            "router-link",
-                            { attrs: { to: { name: "addBook" } } },
-                            [_vm._v("Add Book")]
-                          )
+                          _c("el-menu-item", { attrs: { index: "1-2" } }, [
+                            _vm._v("\n                Add Book\n              ")
+                          ])
                         ],
                         1
                       )

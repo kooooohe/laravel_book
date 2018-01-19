@@ -6,12 +6,16 @@
          <el-menu :default-openeds="['1', '1']">
           <el-submenu index="1">
             <template slot="title"><i class="el-icon-star-off"></i>Menu</template>
-              <el-menu-item index="1-1">
-                <router-link :to="{ name: 'books'}">Books List</router-link>
-              </el-menu-item>
-              <el-menu-item index="1-2">
-                <router-link :to="{ name: 'addBook'}">Add Book</router-link>
-              </el-menu-item>
+              <router-link :to="{ name: 'books'}">
+                <el-menu-item index="1-1">
+                  Books List
+                </el-menu-item>
+              </router-link>
+              <router-link :to="{ name: 'addBook'}">
+                <el-menu-item index="1-2">
+                  Add Book
+                </el-menu-item>
+              </router-link>
           </el-submenu>
          </el-menu>
 
