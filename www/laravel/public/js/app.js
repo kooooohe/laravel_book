@@ -49786,16 +49786,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return element.name == item.value;
       });
     },
-    lendBook: function lendBook(index, row) {
+    borrowBook: function borrowBook(index, row) {
       console.log(row["id"]);
       var book_id = row['id'];
       row['is_lend'] = true;
-      __WEBPACK_IMPORTED_MODULE_0__services_http__["a" /* default */].get('book/lend/' + book_id, function (res) {
+      __WEBPACK_IMPORTED_MODULE_0__services_http__["a" /* default */].get('book/borrow/' + book_id, function (res) {
         console.log(res.data);
       });
       this.$notify.success({
         title: 'Info',
-        message: 'You lend ' + row['name'],
+        message: 'You borrow ' + row['name'],
         showClose: false
       });
     },
@@ -49908,11 +49908,11 @@ var render = function() {
                             },
                             on: {
                               click: function($event) {
-                                _vm.lendBook(scope.$index, scope.row)
+                                _vm.borrowBook(scope.$index, scope.row)
                               }
                             }
                           },
-                          [_vm._v("Lend")]
+                          [_vm._v("Borrow")]
                         )
                   ]
                 }
@@ -49925,7 +49925,7 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { prop: "user_name", label: "LendUser", width: "180" }
+            attrs: { prop: "user_name", label: "BorrowUser", width: "180" }
           })
         ],
         1
@@ -90826,27 +90826,25 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c(
-                        "el-menu-item",
-                        { attrs: { index: "1-1" } },
+                        "router-link",
+                        { attrs: { to: { name: "books" } } },
                         [
-                          _c(
-                            "router-link",
-                            { attrs: { to: { name: "books" } } },
-                            [_vm._v("Books List")]
-                          )
+                          _c("el-menu-item", { attrs: { index: "1-1" } }, [
+                            _vm._v(
+                              "\n                Books List\n              "
+                            )
+                          ])
                         ],
                         1
                       ),
                       _vm._v(" "),
                       _c(
-                        "el-menu-item",
-                        { attrs: { index: "1-2" } },
+                        "router-link",
+                        { attrs: { to: { name: "addBook" } } },
                         [
-                          _c(
-                            "router-link",
-                            { attrs: { to: { name: "addBook" } } },
-                            [_vm._v("Add Book")]
-                          )
+                          _c("el-menu-item", { attrs: { index: "1-2" } }, [
+                            _vm._v("\n                Add Book\n              ")
+                          ])
                         ],
                         1
                       )
