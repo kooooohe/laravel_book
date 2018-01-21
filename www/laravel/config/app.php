@@ -167,6 +167,8 @@ return [
         /*
          * Package Service Providers...
          */
+        //Mail認証
+        Bestmomo\LaravelEmailConfirmation\ServiceProvider::class,
 
         /*
          * Application Service Providers...
