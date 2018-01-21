@@ -26,3 +26,11 @@ services:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
     ports:
       - 3306:3306
+
+  mailhog:
+    image          : mailhog/mailhog:latest
+    container_name : mailhog
+    hostname       : mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
