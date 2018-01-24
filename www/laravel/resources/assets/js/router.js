@@ -8,7 +8,6 @@ export default new VueRouter({
   routes: [
     { path: '/', name:'books', component: require('./components/Books.vue') },
     { path: '/addbook', name:'addBook', component: require('./components/addBook.vue') },
-    { path: '/home', component: require('./components/Books.vue') },
   ],
   scrollBehavior (to, from, savedPosition) {
     if (savedPosition) {
