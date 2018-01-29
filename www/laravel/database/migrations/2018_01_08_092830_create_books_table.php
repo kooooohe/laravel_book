@@ -21,22 +21,6 @@ class CreateBooksTable extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
-        DB::table('books')->insert
-        ([
-            [
-                'name'       => 'TestBook',
-                'author'     => 'author1',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
-            [
-                'name'       => 'TestBook2',
-                'author'     => 'author2',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ]
-        ]
-        );
     }
 
     /**
