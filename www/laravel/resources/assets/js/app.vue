@@ -5,10 +5,10 @@
 
          <el-menu :default-openeds="['1', '1']">
           <el-submenu index="1">
-            <template slot="title"><i class="el-icon-star-off"></i>Menu</template>
+            <template slot="title"><i class="el-icon-star-off"></i>Book</template>
               <router-link :to="{ name: 'books'}">
                 <el-menu-item index="1-1">
-                  Books List
+                  Book List
                 </el-menu-item>
               </router-link>
               <router-link :to="{ name: 'addBook'}">
@@ -17,6 +17,13 @@
                 </el-menu-item>
               </router-link>
           </el-submenu>
+          <el-submenu index="2">
+            <template slot="title"><i class="el-icon-tickets"></i>Job</template>
+                <el-menu-item index="2-1">
+                  Job List
+                </el-menu-item>
+          </el-submenu>
+
          </el-menu>
 
         </el-aside>

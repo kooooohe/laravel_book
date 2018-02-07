@@ -17,6 +17,7 @@
     style="width: 100%">
     <el-table-column
       prop="name"
+      sortable
       label="Name"
       width="180">
     </el-table-column>
@@ -36,6 +37,7 @@
     </el-table-column>
     <el-table-column
       prop="lend_date"
+      sortable
       label="LendDate"
       width="180">
     </el-table-column>

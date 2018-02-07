@@ -49676,6 +49676,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -49875,7 +49877,7 @@ var render = function() {
         },
         [
           _c("el-table-column", {
-            attrs: { prop: "name", label: "Name", width: "180" }
+            attrs: { prop: "name", sortable: "", label: "Name", width: "180" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
@@ -49921,7 +49923,12 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { prop: "lend_date", label: "LendDate", width: "180" }
+            attrs: {
+              prop: "lend_date",
+              sortable: "",
+              label: "LendDate",
+              width: "180"
+            }
           }),
           _vm._v(" "),
           _c("el-table-column", {
@@ -90822,7 +90829,7 @@ var render = function() {
                     [
                       _c("template", { slot: "title" }, [
                         _c("i", { staticClass: "el-icon-star-off" }),
-                        _vm._v("Menu")
+                        _vm._v("Book")
                       ]),
                       _vm._v(" "),
                       _c(
@@ -90831,7 +90838,7 @@ var render = function() {
                         [
                           _c("el-menu-item", { attrs: { index: "1-1" } }, [
                             _vm._v(
-                              "\n                Books List\n              "
+                              "\n                Book List\n              "
                             )
                           ])
                         ],
@@ -90848,6 +90855,22 @@ var render = function() {
                         ],
                         1
                       )
+                    ],
+                    2
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-submenu",
+                    { attrs: { index: "2" } },
+                    [
+                      _c("template", { slot: "title" }, [
+                        _c("i", { staticClass: "el-icon-tickets" }),
+                        _vm._v("Job")
+                      ]),
+                      _vm._v(" "),
+                      _c("el-menu-item", { attrs: { index: "2-1" } }, [
+                        _vm._v("\n                Job List\n              ")
+                      ])
                     ],
                     2
                   )
