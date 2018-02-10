@@ -90870,6 +90870,10 @@ var render = function() {
                       _vm._v(" "),
                       _c("el-menu-item", { attrs: { index: "2-1" } }, [
                         _vm._v("\n                Job List\n              ")
+                      ]),
+                      _vm._v(" "),
+                      _c("el-menu-item", { attrs: { index: "20" } }, [
+                        _vm._v("\n                Post Job\n              ")
                       ])
                     ],
                     2

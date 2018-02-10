@@ -22,6 +22,9 @@
                 <el-menu-item index="2-1">
                   Job List
                 </el-menu-item>
+                <el-menu-item index="20">
+                  Post Job
+                </el-menu-item>
           </el-submenu>
 
          </el-menu>
