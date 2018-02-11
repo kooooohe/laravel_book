@@ -49678,6 +49678,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -49697,7 +49701,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       sujests: [],
       search_word: '',
       timeout: null,
-      user_id: parseInt(document.getElementById('user_id').value)
+      user_id: parseInt(document.getElementById('user_id').value),
+
+      loading2: true
+
     };
   },
 
@@ -49707,15 +49714,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       console.log(this.search_word);
       this.is_loading = true;
+      this.loading2 = true;
       __WEBPACK_IMPORTED_MODULE_0__services_http__["a" /* default */].post('books', { name: this.search_word }, function (res) {
         _this.books = res.data;
         _this.is_loading = false;
+        _this.loading2 = false;
       });
     },
     fetchAllBooks: function fetchAllBooks() {
       var _this2 = this;
 
-      // TODO: not to send request when the user is not authenticated
+      this.loading2 = true;
+
       __WEBPACK_IMPORTED_MODULE_0__services_http__["a" /* default */].get('books', function (res) {
         _this2.books = res.data;
         _this2.books_backup = res.data;
@@ -49725,6 +49735,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           names.push({ "value": res.data[i].name, "id": res.data[i].id });
         }
         _this2.sujests = names;
+        _this2.loading2 = false;
         console.log(names);
       });
     },
@@ -49872,8 +49883,21 @@ var render = function() {
       _c(
         "el-table",
         {
+          directives: [
+            {
+              name: "loading",
+              rawName: "v-loading",
+              value: _vm.loading2,
+              expression: "loading2"
+            }
+          ],
           staticStyle: { width: "100%" },
-          attrs: { data: _vm.books, height: "500" }
+          attrs: {
+            "element-loading-text": "Loading...",
+            "element-loading-background": "rgba(0, 0, 0, 0.8)",
+            data: _vm.books,
+            height: "500"
+          }
         },
         [
           _c("el-table-column", {
@@ -50274,6 +50298,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -50372,7 +50402,19 @@ var render = function() {
       _vm._v(" "),
       _c(
         "el-form-item",
-        { attrs: { label: "Description" } },
+        {
+          attrs: {
+            label: "Description",
+            prop: "description",
+            rules: [
+              {
+                required: true,
+                message: "description is required",
+                trigger: "blur"
+              }
+            ]
+          }
+        },
         [
           _c("el-input", {
             attrs: {

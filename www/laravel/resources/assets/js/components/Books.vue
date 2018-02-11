@@ -12,6 +12,10 @@
 <hr>
 
   <el-table
+    v-loading="loading2"
+    element-loading-text="Loading..."
+    element-loading-background="rgba(0, 0, 0, 0.8)"
+
     :data="books"
     height="500"
     style="width: 100%">
@@ -70,20 +74,27 @@
         search_word: '',
         timeout:  null,
         user_id: parseInt(document.getElementById('user_id').value),
+
+        loading2: true,
+
       }
     },
     methods: {
       fetchBooks () {
         console.log(this.search_word);
         this.is_loading = true;
+        this.loading2 = true;
         http.post('books', {name: this.search_word}, res => {
           this.books = res.data;
           this.is_loading = false;
+          this.loading2 = false;
+
         });
       },
 
       fetchAllBooks () {
-        // TODO: not to send request when the user is not authenticated
+        this.loading2 = true;
+
         http.get('books', res => {
           this.books = res.data;
           this.books_backup = res.data;
@@ -93,8 +104,10 @@
             names.push({"value": res.data[i].name, "id": res.data[i].id});
           }
           this.sujests = names;
-        console.log(names);
+          this.loading2 = false;
+          console.log(names);
         })
+
       },
       //addTask () {
       //  if (this.name === '') {

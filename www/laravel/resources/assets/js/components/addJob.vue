@@ -9,7 +9,13 @@
   >
     <el-input v-model="addJobForm.title" placeholder="title"></el-input>
   </el-form-item>
-  <el-form-item label="Description">
+  <el-form-item 
+    label="Description"
+    prop="description"
+    :rules="[{
+      required: true ,message: 'description is required', trigger: 'blur'
+      }]"
+  >
     <el-input
       type="textarea"
       :autosize="{ minRows: 2, maxRows: 4}"
