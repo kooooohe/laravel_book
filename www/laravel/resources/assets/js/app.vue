@@ -22,9 +22,11 @@
                 <el-menu-item index="2-1">
                   Job List
                 </el-menu-item>
+              <router-link :to="{ name: 'addJob'}">
                 <el-menu-item index="20">
-                  Post Job
+                  Add Job
                 </el-menu-item>
+              </router-link>
           </el-submenu>
 
          </el-menu>

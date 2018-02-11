@@ -16,11 +16,11 @@ class CreateJobsTable extends Migration
         Schema::create('jobs', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title', 100);
-            $table->text('discription');
+            $table->text('description');
             $table->unsignedInteger('yen')->nullable();
             $table->unsignedInteger('created_user_id');
             $table->date('deadline')->nullable();
-            $table->boolean('is_done');
+            $table->boolean('is_done')->default(false);
             $table->softDeletes();
             $table->timestamps();
         });

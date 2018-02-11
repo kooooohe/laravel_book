@@ -1,28 +1,36 @@
-
 <template>
-<el-form :inline="false" :model="addBookForm" ref="addBookForm" class=""  >
+<el-form :inline="false" :model="addJobForm" ref="addJobForm" class="">
   <el-form-item
-  prop="name"
-  label="Name"
+  prop="title"
+  label="Title"
   :rules="[{
-      required: true ,message: 'name is required', trigger: 'blur'
+      required: true ,message: 'title is required', trigger: 'blur'
       }]"
   >
-    <el-input v-model="addBookForm.name" placeholder="name"></el-input>
+    <el-input v-model="addJobForm.title" placeholder="title"></el-input>
   </el-form-item>
-  <el-form-item label="Author">
-    <el-input v-model="addBookForm.author" placeholder="author"></el-input>
+  <el-form-item label="Description">
+    <el-input
+      type="textarea"
+      :autosize="{ minRows: 2, maxRows: 4}"
+      placeholder="description"
+      v-model="addJobForm.description">
+    </el-input>
   </el-form-item>
-    <!--
-  <el-form-item label="Activity zone">
-    <el-select v-model="addBookForm.author" placeholder="Activity zone">
-      <el-option label="Zone one" value="shanghai"></el-option>
-      <el-option label="Zone two" value="beijing"></el-option>
-    </el-select>
+  <el-form-item label="Deadline">
+    <el-date-picker
+      v-model="addJobForm.dead_line"
+      type="date"
+      value-format="yyyy-MM-dd"
+      placeholder="Pick a date"
+      >
+    </el-date-picker>
   </el-form-item>
-  -->
+  <el-form-item label="Amount(yen)">
+    <el-input-number v-model="addJobForm.yen" :min="0" :max="10"></el-input-number>
+  </el-form-item>
   <el-form-item>
-    <el-button type="primary" @click="onSubmit('addBookForm')">Submit</el-button>
+    <el-button type="primary" @click="onSubmit('addJobForm')">Submit</el-button>
   </el-form-item>
 </el-form>
 
@@ -32,37 +40,37 @@
   import http from '../services/http'
 
   export default {
-  //  mounted() {
-  //    this.fetchBooks()
-  //  },
     data() {
       return {
-          addBookForm: {
-            name:'',
-            author:'',
+          addJobForm: {
+            title:'',
+            description:'',
+            dead_line:'',
+            yen: 0,
             response:[],
           }
       }
     },
     methods: {
       onSubmit(formName) {
-
         //check validation
         this.$refs[formName].validate((valid) => {
           if (valid) {
 
-            http.post('addbook', {name: this.addBookForm.name, author: this.addBookForm.author}, res => {
+            http.post('addjob', {title: this.addJobForm.title, description: this.addJobForm.description, dead_line: this.addJobForm.dead_line, yen: this.addJobForm.yen}, res => {
               this.response = res.data
             });
 
             this.$message({
               showClose: true,
-              message: 'Congrats, this is a success',
+              message: 'You posted ' + this.addJobForm.title,
               type: 'success'
             });
 
-            this.addBookForm.name = "";
-            this.addBookForm.author = "";
+            //this.addJobForm.title = "";
+            //this.addJobForm.description = "";
+            //this.addJobForm.yen = 0;
+            //this.addJobForm.dead_line = "";
 
           } else {
             this.$message({
