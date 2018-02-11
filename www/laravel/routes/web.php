@@ -25,6 +25,6 @@ Route::post('/api/book/borrow/{book_id}', 'BookController@borrow');
 Route::get('/api/book/return/{book_id}', 'BookController@returnBook');
 Route::post('/api/book/return/{book_id}', 'BookController@returnBook');
 
-
+Route::post('/api/addjob', 'AddJobController@index');
 
 Route::get('/home', 'HomeController@index')->name('home');
