@@ -19,9 +19,11 @@
           </el-submenu>
           <el-submenu index="2">
             <template slot="title"><i class="el-icon-tickets"></i>Job</template>
+              <router-link :to="{ name: 'jobList'}">
                 <el-menu-item index="2-1">
                   Job List
                 </el-menu-item>
+              </router-link>
               <router-link :to="{ name: 'addJob'}">
                 <el-menu-item index="20">
                   Add Job
