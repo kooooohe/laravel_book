@@ -147,8 +147,8 @@
       //   ];
       //},
       querySearchAsync(queryString, cb) {
-        var sujests = this.sujests;
-        var results = queryString ? sujests.filter(this.createFilter(queryString)) : sujests;
+        let sujests = this.sujests;
+        let results = queryString ? sujests.filter(this.createFilter(queryString)) : sujests;
 
         clearTimeout(this.timeout);
         this.timeout = setTimeout(() => {

@@ -33,7 +33,7 @@
     </el-date-picker>
   </el-form-item>
   <el-form-item label="Amount(yen)">
-    <el-input-number v-model="addJobForm.yen" :min="0" :max="10"></el-input-number>
+    <el-input-number v-model="addJobForm.yen" :min="0" :max="10000000"></el-input-number>
   </el-form-item>
   <el-form-item>
     <el-button type="primary" @click="onSubmit('addJobForm')">Submit</el-button>

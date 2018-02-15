@@ -9,6 +9,7 @@ export default new VueRouter({
     { path: '/', name:'books', component: require('./components/Books.vue') },
     { path: '/addbook', name:'addBook', component: require('./components/addBook.vue') },
     { path: '/addjob', name:'addJob', component: require('./components/addJob.vue') },
+    { path: '/joblist', name:'jobList', component: require('./components/JobList.vue') },
   ],
   scrollBehavior (to, from, savedPosition) {
     if (savedPosition) {
